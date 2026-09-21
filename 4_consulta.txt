@@ -1,0 +1,278 @@
+Saludos, por favor analizar el siguiente codigo para la implementación de una clase en C++ utilizando WINAPI, el nombre de la clase es
+Carga, dentro se declara una variable compleja SL y se usa un metodo getSL() definido como complejo para extraer su valor el compilador arroja dos 
+errores C2039 y C2065.
+
+
+#pragma once
+
+class Carga
+{
+private:
+	double PL = 10.0, QL = 6.0, VLn = 120, Sbase = 100, Vbase = 120, Ibase = 10, Zbase = 20;
+	double FP = 0.5, AngFP = 0.5, AngFPGr = 30, MVASL = 10, VLnpu = 1.0;
+	std::complex<double> SL;
+		
+public:
+	Carga(double _PL, double _QL, double _VLn, double _Sbase, double _Vbase);
+	double getPL();
+	double getQL();
+	double getVLn();
+	double getSbase();
+	double getVbase();
+	double getIbase();
+	double getZbase();
+	double getVLnpu();
+	std::complex<double> getSL();
+	double getMVASL();
+	double getAngFP();
+	double getAngFPGr();
+	double getFP();
+	
+};
+
+
+#include "Carga.h"
+#include <cmath>
+#include <complex>
+#include <stdlib.h>
+#include <corecrt_math_defines.h>
+
+using namespace std;
+
+Carga::Carga(double _PL, double _QL, double _VLn, double _Sbase, double _Vbase) {
+	PL = _PL;
+	QL = _QL;
+	VLn = _VLn;
+	Sbase = _Sbase;
+	Vbase = _Vbase;
+	Ibase = Sbase / (sqrt(3) * Vbase);
+	Zbase = pow(Vbase, 2) / Sbase;
+	VLnpu = VLn / Vbase;
+	//SL = std::complex <double> (PL, QL);
+	//MVASL = abs(SL);
+	//AngFP = arg(SL); // Angulo en radianes
+	AngFPGr = AngFP*180/M_PI; // Angulo en grados
+	FP = cos(AngFP);
+	
+}
+
+double Carga::getPL()
+{
+	return PL;
+}
+
+double Carga::getQL()
+{
+	return QL;
+}
+
+double Carga::getVLn()
+{
+	return VLn;
+}
+
+double Carga::getSbase()
+{
+	return Sbase;
+}
+
+double Carga::getVbase()
+{
+	return Vbase;
+}
+
+double Carga::getIbase()
+{
+	return Ibase;
+}
+
+double Carga::getZbase()
+{
+	return Zbase;
+}
+
+double Carga::getVLnpu()
+{
+	return VLnpu;
+}
+
+complex<double> Carga::getSL()
+{
+	return SL;
+}
+
+double Carga::getMVASL()
+{
+	return MVASL;
+}
+
+double Carga::getAngFP()
+{
+	return AngFP;
+}
+
+double Carga::getAngFPGr()
+{
+	return AngFPGr;
+}
+
+double Carga::getFP()
+{
+	return FP;
+}
+
+
+El problema **no está en WinAPI**, sino en **dos detalles concretos de C++** dentro de tu clase *Carga*.  
+Los errores **C2039** (“no existe el miembro”) y **C2065** (“identificador no declarado”) aparecen por **dos causas típicas** en este código:
+
+---
+
+## 🎯 **1. Falta incluir `<complex>` en el archivo de cabecera**
+En tu *Carga.h* declaras:
+
+```cpp
+std::complex<double> SL;
+std::complex<double> getSL();
+```
+
+Pero **no incluyes `<complex>` en el .h**, solo en el .cpp.
+
+👉 Esto provoca que el compilador, al procesar el .h, **no conozca qué es `std::complex`**, y por eso lanza:
+
+- **C2039**: `complex` no es miembro de `std`
+- **C2065**: identificador `complex` no declarado
+
+### ✅ **Solución**
+Agrega la librería en el archivo de cabecera:
+
+```cpp
+#pragma once
+#include <complex>   // ← NECESARIO
+
+class Carga
+{
+    ...
+};
+```
+
+---
+
+## 🎯 **2. Estás usando `using namespace std;` solo en el .cpp**
+En el .h no usas `using namespace std;`, pero sí escribes:
+
+```cpp
+std::complex<double> SL;
+```
+
+Esto está correcto porque usas el prefijo `std::`.  
+Pero si en algún momento escribieras solo `complex<double>` en el .h, también fallaría.
+
+👉 En tu código actual **esto no es el problema**, pero es bueno tenerlo claro.
+
+---
+
+## 🎯 **3. El constructor usa `AngFP` sin haberlo inicializado**
+No causa los errores C2039/C2065, pero sí es un **bug lógico**:
+
+```cpp
+AngFPGr = AngFP * 180 / M_PI;
+FP = cos(AngFP);
+```
+
+`AngFP` nunca se asigna porque comentaste:
+
+```cpp
+// AngFP = arg(SL);
+```
+
+👉 Esto deja `AngFP` con basura y produce resultados incorrectos.
+
+### ✅ Solución recomendada
+
+Descomenta la construcción del complejo:
+
+```cpp
+SL = std::complex<double>(PL, QL);
+MVASL = abs(SL);
+AngFP = arg(SL);
+AngFPGr = AngFP * 180 / M_PI;
+FP = cos(AngFP);
+```
+
+---
+
+## 🎯 **4. El método `getSL()` debe coincidir exactamente con la declaración**
+Tu implementación:
+
+```cpp
+complex<double> Carga::getSL()
+{
+    return SL;
+}
+```
+
+Es correcta **solo si** en el .h tienes:
+
+```cpp
+std::complex<double> getSL();
+```
+
+Y sí lo tienes, así que no hay problema aquí.
+
+---
+
+## ✅ **Resumen de la solución**
+Para eliminar los errores C2039 y C2065:
+
+### ✔️ Agrega `<complex>` en el archivo de cabecera  
+### ✔️ Asegúrate de usar `std::complex<double>` en el .h  
+### ✔️ Inicializa `SL` y `AngFP` en el constructor
+
+---
+
+## 📌 **Versión corregida del archivo Carga.h**
+
+```cpp
+#pragma once
+#include <complex>
+
+class Carga
+{
+private:
+    double PL = 10.0, QL = 6.0, VLn = 120, Sbase = 100, Vbase = 120, Ibase = 10, Zbase = 20;
+    double FP = 0.5, AngFP = 0.5, AngFPGr = 30, MVASL = 10, VLnpu = 1.0;
+    std::complex<double> SL;
+
+public:
+    Carga(double _PL, double _QL, double _VLn, double _Sbase, double _Vbase);
+    double getPL();
+    double getQL();
+    double getVLn();
+    double getSbase();
+    double getVbase();
+    double getIbase();
+    double getZbase();
+    double getVLnpu();
+    std::complex<double> getSL();
+    double getMVASL();
+    double getAngFP();
+    double getAngFPGr();
+    double getFP();
+};
+```
+
+---
+
+Si quieres, puedo ayudarte a mejorar la clase, calcular la potencia compleja en pu, o integrarla correctamente en tu procedimiento WinAPI.
+
+Perfecto, vistrimiro. Me alegra saber que ya lo tienes resuelto.  
+Ese tipo de error suele ser de los que desconciertan porque no provienen de la lógica del programa, sino de detalles del preprocesador y del orden en que el compilador ve los archivos. Cuando se corrige, todo encaja de inmediato y la clase empieza a comportarse como debe.
+
+Si más adelante quieres:
+
+- ampliar la clase *Carga* para trabajar en pu,  
+- añadir métodos para calcular corriente, impedancia o potencia aparente,  
+- integrar esta clase con tus diálogos WinAPI,  
+- o incluso convertirla en un módulo reutilizable para otros proyectos eléctricos,
+
+estaré encantado de ayudarte a seguir afinando tu diseño.

@@ -1,0 +1,41 @@
+Nombre del proyecto: PUEjemplo6
+Nombre del archivo que contiene el reporte: PUEjemplo6_Reporte_1
+------------------------------------------------------------------------------------------
+Datos Basicos del sistema
+Cantidad de Generadores  Cantidad de Transformadores Cantidad de Lineas       Cantidad de Motores      Cantidad de Cargas SL    
+         1                        2                        1                        0                        1
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los generadores del sistema:
+No. Gen   S nom (MVA)    V nom (Kv)     Xd en PU       Ra en PU       Ibase equipo   Zbase equipo   Xd en Ohm      Ra en Ohm      
+   1       130,00          13,20        0,16000        0,00000        5,68603        1,34031        0,21445        0,00000
+Analisis de los generadores del sistema en base nueva:
+No. Gen   Sbase.Nueva.MVA   Vbase.Nueva.Kv    Xd.Nueva.PU       Ra.Nueva.PU       Ibase.Nueva.Ka    Zbase.Nueva.Ohm   Xd.Nueva.Ohm      Ra.Nueva.Ohm      
+   1       130,00             13,20           0,16000           0,00000           5,68603           1,34031           0,21445           0,00000
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los transformadores del sistema:
+No. Transf  Snom.MVA       Vnom.Equipo.Kv Alta/Baja      Xt.Equipo en PU/AltaOhm/BajaOhm   Ibase.Equipo.Ka. Alta/Baja    Zbase.Equipo.Ohm Alta/Baja    
+   1         135,00              132,00/13,80                  0,10000/12,90667/0,14107             0,59047/5,64799           129,06667/1,41067
+   2         130,00              132,00/11,00                  0,12000/16,08369/0,11169             0,56860/6,82323           134,03077/0,93077
+Analisis de los transformadores del sistema en base nueva:
+No. Transf  Sbase.Nueva.MVA  Vbase.Nueva.Kv Alta/Baja      Xt.Nueva en PU/AltaOhm/BajaOhm    Ibase.Nueva.Ka. Alta/Baja     Zbase.Nueva.Ohm Alta/Baja     
+   1         130,00              126,26/13,20                  0,10525/12,90667/0,14107             0,59445/5,68603           122,62954/1,34031
+   2         130,00              126,26/10,52                  0,13116/16,08369/0,11169             0,59445/7,13340           122,62954/0,85159
+------------------------------------------------------------------------------------------------------------------------------
+Datos de las lineas del sistema:
+No. Linea   Xl en Ohm      RL en Ohm      Sbase en MVA   Vbase en Kv    
+   1          12,00           4,00         130,00         126,26
+Analisis de las del sistema en base nueva:
+No. Linea   Sbase.MVA    Vbase.Kv     Ibase.Ka     Zbase.Ohm    XL en PU     RLen PU      ZL en Ohm (forma binomica/forma polar)                 ZL en PU (forma binomica/magnitud)      
+   1       130,00       126,26      0,59445      122,62954      0,09786      0,03262      4,00000 + j12,00000 / 12,64911/1,24905rad/71,56505°      0,03262 + j0,09786 / 0,10315
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Datos de las cargas del sistema:
+No.Carga  PL en MW       QL en MVAR     VLnominal Kv/PU     FP (cos(teta)) Tipo FP        SL en MVA forma compleja/forma polar              
+   1       88,00          27,00          11,00 /1,04546        0,95601      Atraso       88,00000+ j27,00000 /92,04890 /0,29770rad/17,05697°
+Analisis de las cargas del sistema en base nueva:
+No.Carga  Sbase.MVA    Vbase.Kv     Ibase.Ka     Zbase.Ohm    IL.Ka forma binomica/forma polar                      IL.PU forma binomica/forma polar        
+   1       130,00        10,52      7,13340      0,85159      4,61880+ j-1,41713 /4,83131/-0,29770rad/-17,05697°      0,64749+ j-0,19866 /0,67728/-0,29770rad/-17,05697°
+Impedancias equivalentes de la carga:
+No.Carga  ZL.Ohm forma binomica/forma polar                     ZL.PU forma binomica/forma polar        
+   1      1,25670+ j0,38558 /1,31452/0,29770rad/17,05697°      1,47571+ j0,45278 /1,54361/0,29770rad/17,05697°
+------------------------------------------------------------------------------------------------------------------------------

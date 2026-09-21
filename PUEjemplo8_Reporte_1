@@ -1,0 +1,55 @@
+Nombre del proyecto: PUEjemplo8
+Nombre del archivo que contiene el reporte: PUEjemplo8_Reporte_1
+------------------------------------------------------------------------------------------
+Datos Basicos del sistema
+Cantidad de Generadores  Cantidad de Transformadores Cantidad de Lineas       Cantidad de Motores      Cantidad de Cargas SL    
+         2                        6                        3                        0                        1
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los generadores del sistema:
+No. Gen   S nom (MVA)    V nom (Kv)     Xd en PU       Ra en PU       Ibase equipo   Zbase equipo   Xd en Ohm      Ra en Ohm      
+   1        20,00          13,20        0,15000        0,00000        0,87477        8,71200        1,30680        0,00000
+   2        20,00          13,20        0,20000        0,00000        0,87477        8,71200        1,74240        0,00000
+Analisis de los generadores del sistema en base nueva:
+No. Gen   Sbase.Nueva.MVA   Vbase.Nueva.Kv    Xd.Nueva.PU       Ra.Nueva.PU       Ibase.Nueva.Ka    Zbase.Nueva.Ohm   Xd.Nueva.Ohm      Ra.Nueva.Ohm      
+   1        50,00             13,80           0,34310           0,00000           2,09185           3,80880           1,30680           0,00000
+   2        50,00             13,80           0,45747           0,00000           2,09185           3,80880           1,74240           0,00000
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los transformadores del sistema:
+No. Transf  Snom.MVA       Vnom.Equipo.Kv Alta/Baja      Xt.Equipo en PU/AltaOhm/BajaOhm   Ibase.Equipo.Ka. Alta/Baja    Zbase.Equipo.Ohm Alta/Baja    
+   1          20,00              138,00/13,80                  0,10000/95,22000/0,95220             0,08367/0,83674           952,20000/9,52200
+   2          20,00              138,00/13,80                  0,10000/95,22000/0,95220             0,08367/0,83674           952,20000/9,52200
+   3          20,00              138,00/13,80                  0,10000/95,22000/0,95220             0,08367/0,83674           952,20000/9,52200
+   4          20,00              138,00/13,80                  0,10000/95,22000/0,95220             0,08367/0,83674           952,20000/9,52200
+   5          15,00              138,00/6,90                  0,08000/101,56800/0,25392             0,06276/1,25511         1.269,60000/3,17400
+   6          15,00              138,00/6,90                  0,08000/101,56800/0,25392             0,06276/1,25511         1.269,60000/3,17400
+Analisis de los transformadores del sistema en base nueva:
+No. Transf  Sbase.Nueva.MVA  Vbase.Nueva.Kv Alta/Baja      Xt.Nueva en PU/AltaOhm/BajaOhm    Ibase.Nueva.Ka. Alta/Baja     Zbase.Nueva.Ohm Alta/Baja     
+   1          50,00              138,00/13,80                  0,25000/95,22000/0,95220             0,20918/2,09185           380,88000/3,80880
+   2          50,00              138,00/13,80                  0,25000/95,22000/0,95220             0,20918/2,09185           380,88000/3,80880
+   3          50,00              138,00/13,80                  0,25000/95,22000/0,95220             0,20918/2,09185           380,88000/3,80880
+   4          50,00              138,00/13,80                  0,25000/95,22000/0,95220             0,20918/2,09185           380,88000/3,80880
+   5          50,00              138,00/6,90                  0,26667/101,56800/0,25392             0,20918/4,18370           380,88000/0,95220
+   6          50,00              138,00/6,90                  0,26667/101,56800/0,25392             0,20918/4,18370           380,88000/0,95220
+------------------------------------------------------------------------------------------------------------------------------
+Datos de las lineas del sistema:
+No. Linea   Xl en Ohm      RL en Ohm      Sbase en MVA   Vbase en Kv    
+   1          40,00           0,00          50,00         138,00
+   2          20,00           0,00          50,00         138,00
+   3          25,00           0,00          50,00         138,00
+Analisis de las del sistema en base nueva:
+No. Linea   Sbase.MVA    Vbase.Kv     Ibase.Ka     Zbase.Ohm    XL en PU     RLen PU      ZL en Ohm (forma binomica/forma polar)                 ZL en PU (forma binomica/magnitud)      
+   1        50,00       138,00      0,20918      380,88000      0,10502      0,00000      0,00000 + j40,00000 / 40,00000/1,57080rad/90,00000°      0,00000 + j0,10502 / 0,10502
+   2        50,00       138,00      0,20918      380,88000      0,05251      0,00000      0,00000 + j20,00000 / 20,00000/1,57080rad/90,00000°      0,00000 + j0,05251 / 0,05251
+   3        50,00       138,00      0,20918      380,88000      0,06564      0,00000      0,00000 + j25,00000 / 25,00000/1,57080rad/90,00000°      0,00000 + j0,06564 / 0,06564
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Datos de las cargas del sistema:
+No.Carga  PL en MW       QL en MVAR     VLnominal Kv/PU     FP (cos(teta)) Tipo FP        SL en MVA forma compleja/forma polar              
+   1       24,00          18,00           6,60 /0,95652        0,80000      Atraso       24,00000+ j18,00000 /30,00000 /0,64350rad/36,86990°
+Analisis de las cargas del sistema en base nueva:
+No.Carga  Sbase.MVA    Vbase.Kv     Ibase.Ka     Zbase.Ohm    IL.Ka forma binomica/forma polar                      IL.PU forma binomica/forma polar        
+   1        50,00         6,90      4,18370      0,95220      2,09946+ j-1,57459 /2,62432/-0,64350rad/-36,86990°      0,50182+ j-0,37636 /0,62727/-0,64350rad/-36,86990°
+Impedancias equivalentes de la carga:
+No.Carga  ZL.Ohm forma binomica/forma polar                     ZL.PU forma binomica/forma polar        
+   1      1,16160+ j0,87120 /1,45200/0,64350rad/36,86990°      1,21991+ j0,91493 /1,52489/0,64350rad/36,86990°
+------------------------------------------------------------------------------------------------------------------------------

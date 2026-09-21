@@ -1,0 +1,46 @@
+Nombre del proyecto: PUEjemplo7
+Nombre del archivo que contiene el reporte: PUEjemplo7_Reporte_1
+------------------------------------------------------------------------------------------
+Datos Basicos del sistema
+Cantidad de Generadores  Cantidad de Transformadores Cantidad de Lineas       Cantidad de Motores      Cantidad de Cargas SL    
+         2                        3                        3                        1                        0
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los generadores del sistema:
+No. Gen   S nom (MVA)    V nom (Kv)     Xd en PU       Ra en PU       Ibase equipo   Zbase equipo   Xd en Ohm      Ra en Ohm      
+   1        30,00           6,90        0,50000        0,00000        2,51022        1,58700        0,79350        0,00000
+   2        20,00          13,80        0,40000        0,00000        0,83674        9,52200        3,80880        0,00000
+Analisis de los generadores del sistema en base nueva:
+No. Gen   Sbase.Nueva.MVA   Vbase.Nueva.Kv    Xd.Nueva.PU       Ra.Nueva.PU       Ibase.Nueva.Ka    Zbase.Nueva.Ohm   Xd.Nueva.Ohm      Ra.Nueva.Ohm      
+   1        30,00              6,90           0,50000           0,00000           2,51022           1,58700           0,79350           0,00000
+   2        30,00             13,20           0,65579           0,00000           1,31216           5,80800           3,80880           0,00000
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los transformadores del sistema:
+No. Transf  Snom.MVA       Vnom.Equipo.Kv Alta/Baja      Xt.Equipo en PU/AltaOhm/BajaOhm   Ibase.Equipo.Ka. Alta/Baja    Zbase.Equipo.Ohm Alta/Baja    
+   1          25,00              115,00/6,90                  0,10000/52,90000/0,19044             0,12551/2,09185           529,00000/1,90440
+   2          30,00              115,00/13,20                  0,08000/35,26667/0,46464             0,15061/1,31216           440,83333/5,80800
+   3          20,00              115,00/6,90                  0,10000/66,12500/0,23805             0,10041/1,67348           661,25000/2,38050
+Analisis de los transformadores del sistema en base nueva:
+No. Transf  Sbase.Nueva.MVA  Vbase.Nueva.Kv Alta/Baja      Xt.Nueva en PU/AltaOhm/BajaOhm    Ibase.Nueva.Ka. Alta/Baja     Zbase.Nueva.Ohm Alta/Baja     
+   1          30,00              115,00/6,90                  0,12000/52,90000/0,19044             0,15061/2,51022           440,83333/1,58700
+   2          30,00              115,00/13,20                  0,08000/35,26667/0,46464             0,15061/1,31216           440,83333/5,80800
+   3          30,00              115,00/6,90                  0,15000/66,12500/0,23805             0,15061/2,51022           440,83333/1,58700
+------------------------------------------------------------------------------------------------------------------------------
+Datos de las lineas del sistema:
+No. Linea   Xl en Ohm      RL en Ohm      Sbase en MVA   Vbase en Kv    
+   1          80,00          25,00          30,00         115,00
+   2          60,00          20,00          30,00         115,00
+   3          30,00          10,00          30,00         115,00
+Analisis de las del sistema en base nueva:
+No. Linea   Sbase.MVA    Vbase.Kv     Ibase.Ka     Zbase.Ohm    XL en PU     RLen PU      ZL en Ohm (forma binomica/forma polar)                 ZL en PU (forma binomica/magnitud)      
+   1        30,00       115,00      0,15061      440,83333      0,18147      0,05671     25,00000 + j80,00000 / 83,81527/1,26791rad/72,64598°      0,05671 + j0,18147 / 0,19013
+   2        30,00       115,00      0,15061      440,83333      0,13611      0,04537     20,00000 + j60,00000 / 63,24555/1,24905rad/71,56505°      0,04537 + j0,13611 / 0,14347
+   3        30,00       115,00      0,15061      440,83333      0,06805      0,02268     10,00000 + j30,00000 / 31,62278/1,24905rad/71,56505°      0,02268 + j0,06805 / 0,07173
+------------------------------------------------------------------------------------------------------------------------------
+Datos de los motores del sistema:
+No. Mot   S nom (MVA)    V nom (Kv)     Xd en PU       Ra en PU       Ibase equipo   Zbase equipo   Xd en Ohm      Ra en Ohm      
+   1        20,00           6,90        0,25000        0,00000        1,67348        2,38050        0,59513        0,00000
+Analisis de los motores del sistema en base nueva:
+No. Mot   Sbase.Nueva.MVA   Vbase.Nueva.Kv    Xd.Nueva.PU       Ra.Nueva.PU       Ibase.Nueva.Ka    Zbase.Nueva.Ohm   Xd.Nueva.Ohm      Ra.Nueva.Ohm      
+   1        30,00              6,90           0,37500           0,00000           2,51022           1,58700           0,59513           0,00000
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------

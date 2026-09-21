@@ -1,0 +1,228 @@
+Saludos, por favor analizar el siguiente codigo para la implementación de una clase en C++ utilizando WINAPI, el nombre de la clase es
+Carga, dentro se declara una variable wchar_t tipoFP[10] y se usa un metodo gettipoFP() definido como wchar_t, el valor que muestra en la ventana es extraño no un texto.
+
+
+#pragma once
+#include <complex>
+#include <string>
+
+class Carga
+{
+private:
+	double PL = 8.0, QL = 6.0, VLn = 120, Sbase = 100, Vbase = 120, Ibase = 10, Zbase = 20;
+	double FP = 0.5, AngFP = 0.5, AngFPGr = 30, MVASL = 10, VLnpu = 1.0;
+	wchar_t tipoFP[10] = L"ade";
+	std::complex<double> SL, IL, SLpu, ILpu, ZL, ZLpu;
+	
+public:
+	Carga(double _PL, double _QL, double _VLn, double _Sbase, double _Vbase);
+	double getPL();
+	double getQL();
+	double getVLn();
+	double getSbase();
+	double getVbase();
+	double getIbase();
+	double getZbase();
+	double getVLnpu();
+	std::complex<double> getSL();
+	double getMVASL();
+	double getAngFP();
+	double getAngFPGr();
+	double getFP();
+	wchar_t gettipoFP();
+	std::complex<double> getIL();
+	std::complex<double> getSLpu();
+	std::complex<double> getILpu();
+	std::complex<double> getZL();
+	std::complex<double> getZLpu();
+};
+
+
+
+#include "Carga.h"
+#include <cmath>
+#include <stdlib.h>
+#include <corecrt_math_defines.h>
+
+using namespace std;
+
+Carga::Carga(double _PL, double _QL, double _VLn, double _Sbase, double _Vbase) {
+	PL = _PL;
+	QL = _QL;
+	VLn = _VLn;
+	Sbase = _Sbase;
+	Vbase = _Vbase;
+	Ibase = Sbase / (sqrt(3) * Vbase);
+	Zbase = pow(Vbase, 2) / Sbase;
+	VLnpu = VLn / Vbase;
+	SL = std::complex <double> (PL, QL);
+	MVASL = abs(SL);
+	AngFP = arg(SL); // Angulo en radianes
+	AngFPGr = AngFP*180/M_PI; // Angulo en grados
+	FP = cos(AngFP);
+	if (AngFP < 0) swprintf_s(tipoFP, 10, L"Adelanto");
+	if (AngFP > 0) swprintf_s(tipoFP, 10, L"Atraso");
+	if (AngFP == 0) swprintf_s(tipoFP, 10, L"Resistivo");
+	IL = conj(SL/(sqrt(3)*VLn)); //Corriente nominal forma compleja
+	SLpu = SL / Sbase;
+	ILpu = IL / Ibase;
+	ZL = VLn / (sqrt(3) * IL); //Impedancia equivalente ohm/fase
+	ZLpu = ZL / Zbase; //Impedancia equivalente pu
+}
+
+double Carga::getPL()
+{
+	return PL;
+}
+
+double Carga::getQL()
+{
+	return QL;
+}
+
+double Carga::getVLn()
+{
+	return VLn;
+}
+
+double Carga::getSbase()
+{
+	return Sbase;
+}
+
+double Carga::getVbase()
+{
+	return Vbase;
+}
+
+double Carga::getIbase()
+{
+	return Ibase;
+}
+
+double Carga::getZbase()
+{
+	return Zbase;
+}
+
+double Carga::getVLnpu()
+{
+	return VLnpu;
+}
+
+complex<double> Carga::getSL()
+{
+	return SL;
+}
+
+double Carga::getMVASL()
+{
+	return MVASL;
+}
+
+double Carga::getAngFP()
+{
+	return AngFP;
+}
+
+double Carga::getAngFPGr()
+{
+	return AngFPGr;
+}
+
+double Carga::getFP()
+{
+	return FP;
+}
+
+wchar_t Carga::gettipoFP()
+{
+	return tipoFP[10];
+}
+
+std::complex<double> Carga::getIL()
+{
+	return IL;
+}
+
+std::complex<double> Carga::getSLpu()
+{
+	return SLpu;
+}
+
+std::complex<double> Carga::getILpu()
+{
+	return ILpu;
+}
+
+std::complex<double> Carga::getZL()
+{
+	return ZL;
+}
+
+std::complex<double> Carga::getZLpu()
+{
+	return ZLpu;
+}
+
+
+
+
+Para la cración de la ventana donde se muestran los resultados uso el siguiente procedimiento:
+Pero sigue generando problemas al mostrar los datos
+
+BOOL CALLBACK DlgProc11(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{   //Procedimiento para mostrar el resultado del analisis pu de cargas SL
+
+    static MatrixD* Datbas;
+
+
+    switch (msg)                  // manipulador del mensaje
+    {
+    case WM_INITDIALOG:
+    {
+        Datbas = (MatrixD*)lParam;
+        wchar_t texto[60];
+        int i = Datbas->ind;
+        SetDlgItemTextW(hDlg, IDC_EDIT3, (LPCWSTR)Datbas->NombreProy);
+        SetDlgItemInt(hDlg, IDC_EDIT2, Datbas->nc, true); //No. de CARGAS SL
+        SetDlgItemInt(hDlg, IDC_EDIT1, (i + 1), true); //No. de carga SL a cargaar
+        
+        Carga SL(Datbas->Car[i][0], Datbas->Car[i][1], Datbas->Car[i][2], Datbas->Car[i][3], Datbas->Car[i][4]);
+        
+        swprintf_s(texto, 60, L"Factor de potencia de la carga FP = %.5f  en %c", (float)SL.getFP(), SL.gettipoFP());
+        SendDlgItemMessage(hDlg, IDC_LIST2, LB_ADDSTRING, 0, (LPARAM)texto);
+        
+        
+
+        
+        swprintf_s(texto, 60, L"SLpu compleja = (%.5f + j %.5f) PU", (float)Datbas->Car[i][16], (float)Datbas->Car[i][17]);
+        SendDlgItemMessage(hDlg, IDC_LIST2, LB_ADDSTRING, 0, (LPARAM)texto);
+        swprintf_s(texto, 60, L"ILpu compleja = (%.5f + j %.5f) PU", (float)Datbas->Car[i][18], (float)Datbas->Car[i][19]);
+        SendDlgItemMessage(hDlg, IDC_LIST2, LB_ADDSTRING, 0, (LPARAM)texto);
+        swprintf_s(texto, 60, L"ZL equivalente de la carga = (%.5f + j %.5f) Ohm", (float)Datbas->Car[i][20], (float)Datbas->Car[i][21]);
+        SendDlgItemMessage(hDlg, IDC_LIST2, LB_ADDSTRING, 0, (LPARAM)texto);
+        swprintf_s(texto, 60, L"ZLpu equivalente de la carga = (%.5f + j %.5f) PU", (float)Datbas->Car[i][22], (float)Datbas->Car[i][23]);
+        SendDlgItemMessage(hDlg, IDC_LIST2, LB_ADDSTRING, 0, (LPARAM)texto);
+
+    }
+    return TRUE;
+    case WM_COMMAND: {
+        switch (LOWORD(wParam)) {
+        case IDOK: {
+
+            EndDialog(hDlg, FALSE);
+        }
+                 break;
+        case IDCANCEL:
+        {
+            EndDialog(hDlg, FALSE);
+        }
+        break;
+        }  //Fin del switch del COMMAND
+    }
+                   break;
+    }  // Fin del switch del mensaje
+    return FALSE;
+}
+
